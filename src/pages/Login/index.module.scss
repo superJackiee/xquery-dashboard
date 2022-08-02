@@ -1,0 +1,40 @@
+.wrapper {
+  max-width: 360px;
+  padding: 50px 30px;
+  margin: calc(50vh - 250px) auto 0px auto;
+}
+
+.back {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.wallet {
+  margin-top: 32px;
+  padding: 10px 18px;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.subtitle {
+  margin-top: 12px;
+  padding: 0px 20px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 420px) {
+  .wrapper {
+    padding: 50px 15px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .wrapper {
+    padding: none;
+  }
+}

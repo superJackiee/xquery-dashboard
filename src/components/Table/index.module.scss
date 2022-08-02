@@ -1,0 +1,220 @@
+.mt30 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  max-width: 860px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px !important;
+  gap: 0px !important;
+}
+
+.header {
+  padding: 20px;
+  border-bottom: 1px solid #D0D5DD;
+}
+
+.filter {
+  height: fit-content;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toFilterBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background-color: #f9f5ff;
+  color: #6941c6;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.flexStart {
+  align-items: flex-start;
+}
+
+.title {
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+
+.sinput {
+  max-width: 400px;
+  font-size: 14px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: solid 1px #D0D5DD;
+  padding: 10px 10px 10px 15px;
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+}
+
+
+.info {
+  margin-right: 4px !important;
+  cursor: pointer;
+}
+
+.column {
+  text-align: left;
+  padding: 12px 30px;
+}
+
+.row {
+  max-height: 66px;
+  padding: 0px;
+  align-items: center;
+  justify-content: space-between !important;
+}
+
+.footer {
+  padding: 10px 30px;
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: start;
+  gap: 5px;
+}
+
+.page {
+  font-size: 14px !important;
+  font-weight: 500;
+  width: 40px;
+  height: 40px;
+  margin-right: 2px;
+}
+
+.arrow {
+  color: #667085 !important;
+}
+
+.left {
+  margin-right: auto;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.active {
+  color: #7f56d9 !important;
+}
+
+.infoBtn {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  margin: 0 auto;
+  padding: 8px 14px;
+  width: fit-content;
+  border-radius: 6px;
+  background: #7f56d9;
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+}
+
+.filtSelect {
+  box-sizing: border-box;
+  width: 50px;
+  height: 40px;
+  color: transparent;
+}
+
+.MuiSvgIcon-root.MuiSelect-iconOutlined {
+  display: none !important;
+}
+
+.tag1 {
+  display: flex;
+  gap: 4px;
+}
+
+.tag2 {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .top {
+    position: sticky;
+    right: 30px;
+  }
+
+  .sinput {
+    margin-right: 15px;
+  }
+
+  .dtable {
+    overflow: auto;
+  }
+
+  .row {
+    position: relative;
+  }
+
+  .info {
+    display: none;
+  }
+}
+
+.pagination {
+  display: block;
+}
+
+@media (max-width: 576px) {
+  .footer {
+    padding: 10px 10px;
+    font-size: 10px;
+  }
+
+  .flexCenter {
+    justify-content: center;
+  }
+
+  .pagination {
+    display: none;
+  }
+
+  .filtSelect {
+    min-width: 100% !important;
+  }
+
+  .toFilterBtn {
+    font-size: 14px !important;
+    border-radius: 16px;
+    padding: 2px 8px 2px 10px;
+    gap: 2px;
+  }
+
+  .tag1 {
+    display: none;
+  }
+
+  .tag2 {
+    display: flex;
+    gap: 6px;
+    margin-right: auto;
+  }
+}
+
+.apexcharts-canvas .apexchartsw7k6ocrc .apexcharts-theme-light {
+  width: '100% !important'
+}
+
+@media (max-width: 400px) {
+  .row {
+    width: 800px;
+  }
+
+  .column {
+    width: 90px;
+    text-align: left;
+    padding: 12px 20px;
+  }
+}

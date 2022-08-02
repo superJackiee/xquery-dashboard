@@ -1,0 +1,176 @@
+.header {
+  max-width: 1280px;
+  display: flex;
+  margin: 0 auto;
+  padding: 18px 20px;
+  justify-content: space-between;
+}
+
+.about {
+  width: 360px;
+  box-sizing: border-box;
+  padding: 20px !important;
+}
+
+.innerFlex {
+  display: flex;
+}
+
+.innerFlex>img {
+  margin-left: 16px;
+}
+
+.innerFlex>button {
+  margin-left: 16px;
+}
+
+.content {
+  width: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  padding: 0 20px 10px 20px;
+  margin: 0 auto;
+}
+
+.chart {
+  width: 100%;
+  max-width: 860px;
+  box-sizing: border-box;
+  align-items: flex-start !important;
+  padding: 24px !important;
+}
+
+.desktopSelect {
+  display: flex;
+}
+
+.mobileSelect {
+  display: none;
+  width: 100%;
+}
+
+@media (max-width: 1250px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .chart {
+    width: 100%;
+    box-sizing: border-box;
+    align-items: flex-start !important;
+    padding: 24px !important;
+  }
+}
+
+.subContainer {
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .subContainer {
+
+    // width: 100%;
+    .leftSubContainer {
+      width: 100%;
+    }
+  }
+
+  .container {
+    padding: 0px 0px 40px 0px;
+  }
+}
+
+@media (max-width: 860px) {
+  .chart {
+    max-width: 100%;
+    padding: 25px 15px 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 48px 15px;
+  }
+
+  .desktopSelect {
+    display: none;
+  }
+
+  .mobileSelect {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.title {
+  font-weight: 500 !important;
+}
+
+.spaceBetween {
+  justify-content: space-between !important;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.flexStart {
+  justify-content: flex-start !important;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #eaecf0;
+  margin: 0px 0px 13px;
+}
+
+.link {
+  margin-left: 12px;
+  color: #667085;
+}
+
+.newProject {
+  margin-right: 5px;
+}
+
+@media (max-width: 576px) {
+  .newProject {
+    display: none;
+  }
+
+  .chart {
+    .MuiPaper-elevation {
+      left: 30px !important;
+      min-width: calc(100% - 60px) !important;
+    }
+  }
+
+  .css-h4ji9t-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+    left: 30px !important;
+    min-width: calc(100% - 60px) !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .subContainer {
+    .rightSubContainer {
+      width: 100%;
+
+      .about {
+        width: 100%;
+      }
+
+      // width: 250px;
+      // margin: 0 auto;
+    }
+  }
+
+  .spaceBetween {
+    // width: 100%;
+    justify-content: center !important;
+  }
+}
