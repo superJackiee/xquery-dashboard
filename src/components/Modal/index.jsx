@@ -18,7 +18,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Avatar, CircularProgress } from '@mui/material'
+import { NEW_PROJECT_MSG } from '../../configs'
+import { Avatar } from '@mui/material'
 
 import {
   FilterList, Close, HelpOutline, CheckCircleOutline, RadioButtonUnchecked,
@@ -36,6 +37,8 @@ import Stack from '@mui/material/Stack'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { setProject } from '../../redux/slice/projectSlice'
+import { useConnectWallet } from '@web3-onboard/react'
+import { ethers } from 'ethers'
 
 
 const style = {
@@ -149,6 +152,7 @@ const filterlist = [
 
 const ProjectModal = (props) => {
   const { open, handleClose } = props
+  const [{ wallet }] = useConnectWallet()
 
   const mode = useSelector((state) => state.toogle.darkMode)
   const dispatch = useDispatch()
@@ -167,7 +171,7 @@ const ProjectModal = (props) => {
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
   const onClickDetail = async () => {
     const body = {
@@ -176,15 +180,18 @@ const ProjectModal = (props) => {
       "params": []
     }
     try {
-      setLoading(true)
+      const provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+      const signer = provider.getSigner()
+      const signature = await signer.signMessage(NEW_PROJECT_MSG)
+      console.log(signature, wallet.accounts[0])
+      const verify = await api.project.verifySignature({ signature: signature, wallet: wallet.accounts[0].address })
+      console.log("verify:", verify)
       const result = await api.project.createProject(body)
-      setLoading(false)
       dispatch(setProject(result?.data?.result))
       setNewProj(result?.data?.result)
       setTabIndex(1)
     } catch (error) {
       console.log("error:", error)
-      setLoading(false)
     }
   }
 
@@ -361,7 +368,7 @@ const ProjectModal = (props) => {
                                 onClick={onClickDetail}
                               >
                                 <Typography variant='h5' >
-                                  View&nbsp;details
+                                  View details
                                 </Typography>
                               </Button>
                               <Button variant='contained' className={styles.infoMobile} onClick={onClickDetail}><img src={info} alt='info' /></Button>

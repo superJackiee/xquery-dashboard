@@ -196,8 +196,6 @@ const StyledTable = (props) => {
     { projectId: 'c9f0f895fb98ab9159f51fd0297e236v', status: 'Active', usage: 25, expires: 'Aug 01, 2022' }
   ]
 
-  const mode = useSelector((state) => state.toogle.darkMode)
-  const theme = mode === 'true' ? dark : light
   const { open, handleClose, handleOpen } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
