@@ -16,7 +16,6 @@ import {
 import styles from './index.module.scss'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-import { createStyles, makeStyles } from '@mui/styles'
 
 const titles = [
   'Title - Project Info',
@@ -24,22 +23,6 @@ const titles = [
   'Title - Project Cancelled',
   'Title - Extend Project - Payment'
 ]
-
-const useStyles = makeStyles((theme) => {
-  createStyles({
-    key: {
-      color: theme.palette.text.primary,
-      fontWeight: 500,
-      fontSize: '14px',
-      lineHeight: 1.43,
-      fontFamily: 'Inner',
-    },
-    successChip: {
-      color: '#ECFDF3 !important',
-      backgroundColor: '#027A48'
-    }
-  })
-})
 
 const address = '0x6e6781b0666b5d3B9462697372CF49156A1'
 
@@ -51,8 +34,6 @@ const ProjectInfoModal = (props) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [title, setTitle] = useState(titles[0])
   const [copyFlag, setCopyFlag] = useState(false)
-
-  const classes = useStyles()
 
   useEffect(() => {
     setTitle(titles[tabIndex])
@@ -69,17 +50,18 @@ const ProjectInfoModal = (props) => {
       >
         <Box sx={{ backgroundColor: theme.palette.warning.light, border: 'none !important' }} className={`${styles.modalBox}`}>
           <Stack direction='row' justifyContent='flex-end'>
-            <Close sx={{ fontSize: '25px', cursor: 'pointer', color: 'common.black' }} onClick={handleClose} />
+            <Close sx={{ fontSize: '25px', cursor: 'pointer', color: '#98a2b3', margin: '-14px -14px 0px 0px' }} onClick={handleClose} />
           </Stack>
           <Typography id="modal-modal-title" variant="h2" component="h2"
             className={styles.title}
             color='common.black'
+            sx={{ fontSize: '20px', marginTop: '-10px !important' }}
           >
             {title}
           </Typography>
           <div className={`${styles.divider}`} style={{ background: `${theme.palette.divider}` }} />
-          <Typography className={styles.subTitle} color='common.black'>
-            {tabIndex === 0 ? 'Your Project Detail1' : 'Section title'}
+          <Typography className={styles.subTitle} color='common.black' sx={{ fontSize: '16px !important', fontWeight: '500 !important' }}>
+            {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
           </Typography>
           <Typography className={styles.desc} color='text.primary'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non.
@@ -91,35 +73,35 @@ const ProjectInfoModal = (props) => {
                 <Stack spacing={2} sx={{ p: 2.5, mt: 1.5, border: 'none', borderRadius: 2, background: theme.palette.warning.dark, color: theme.palette.text.primary }}>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div className={classes.key}>Project ID: </div>
-                      <HelpOutline sx={{ fontSize: '20px' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div>
+                      <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div className={classes.key}>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
+                    <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div className={classes.key}>Project Status: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <Chip label="Active" sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 8px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
+                    <Chip label="Active" size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
                   </Stack>
                   {/* {
                     (projectInfoIndex === 1 || projectInfoIndex === 2) && ( */}
                   <>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div className={classes.key}>Usage: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
                       <div>60%</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div className={classes.key}>Expires: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
                       <div>10:38, Aug 01, 2022</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div className={classes.key}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
                       <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                         <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
@@ -131,21 +113,21 @@ const ProjectInfoModal = (props) => {
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
                       <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
-                      <div>$200</div>
+                      <div style={{ fontSize: '14px' }}>$200</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div>Service Level: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
-                      <div>Tier 2 - 32 million requests / month</div>
+                      <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
                     </Stack>
                   </>
                   {/* )
@@ -159,15 +141,15 @@ const ProjectInfoModal = (props) => {
                 <Stack spacing={2} sx={{ p: 2.5, mt: 1.5, border: 'none', borderRadius: 2, background: theme.palette.warning.dark, color: theme.palette.text.primary }} >
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div>Project ID: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
                     <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div>Project Status: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <Chip label="Active" sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 8px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
+                    <Chip label="Active" size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
                   </Stack>
 
                   {
@@ -175,45 +157,43 @@ const ProjectInfoModal = (props) => {
                       <>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Usage: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
                           <div>60%</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Expires: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
                           <div>10:38, Aug 01, 2022</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
                           <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                             <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
                             <Chip label={'AVAX'} size='small' sx={{ color: '#c01048', backgroundColor: '#fff1f3' }} />
-                            <Chip label={'BSC'} size='small' sx={{
-                              color: '#854a0e', backgroundColor: '#fef7c3'
-                            }} />
+                            <Chip label={'BSC'} size='small' sx={{ color: '#854a0e', backgroundColor: '#fef7c3' }} />
                           </Stack>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
                           <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
-                          <div>$200</div>
+                          <div style={{ fontSize: '14px' }}>$200</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Service Level: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
-                          <div>Tier 2 - 32 million requests / month</div>
+                          <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
                         </Stack>
                       </>
                     )
@@ -227,13 +207,13 @@ const ProjectInfoModal = (props) => {
                 <Stack spacing={2} sx={{ padding: 2, borderRadius: 1, border: 'none', mt: 1.5, background: theme.palette.warning.dark, color: theme.palette.text.primary }}>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Project ID: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div className={styles.left}>Project ID: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
                     <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div className={styles.left}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
                     <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                       <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
@@ -245,15 +225,15 @@ const ProjectInfoModal = (props) => {
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div className={styles.left}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div>$200</div>
+                    <div style={{ fontSize: '14px' }}>$200</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Service Level: </div><HelpOutline sx={{ fontSize: '20px' }} />
+                      <div className={styles.left}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div>Tier 2 - 32 million requests / month</div>
+                    <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
                   </Stack>
                 </Stack>
 
@@ -291,7 +271,8 @@ const ProjectInfoModal = (props) => {
                       sx={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        width: '40%'
+                        width: '40%',
+                        color: '#344054'
                       }}
                     >
                       Payment address: <HelpOutline sx={{ fontSize: '16px' }} />
@@ -330,7 +311,7 @@ const ProjectInfoModal = (props) => {
                   onClick={() => {
                     setTabIndex(1)
                   }}
-                  sx={{ height: '44px' }}
+                  sx={{ height: '44px', borderRadius: '6px', border: 'solid 1px #d0d5dd', backgroundColor: '#fff', color: '#344054' }}
                 >
                   <Typography className={styles.bold} variant='h4'>
                     Cancel&nbsp;this&nbsp;project
@@ -341,7 +322,7 @@ const ProjectInfoModal = (props) => {
                   onClick={() => {
                     setTabIndex(3)
                   }}
-                  sx={{ height: '44px' }}
+                  sx={{ height: '44px', borderRadius: '6px' }}
                 >
                   <Typography className={styles.bold} variant='h4'>
                     Extend&nbsp;this&nbsp;project
@@ -353,11 +334,11 @@ const ProjectInfoModal = (props) => {
           {
             (tabIndex === 1) && ( //cancel project
               <Stack direction={'row'} justifyContent='space-between' sx={{ mt: 3 }}>
-                <Button variant='contained' fullWidth endIcon={<ArrowForward />}
+                <Button variant='contained' fullWidth
                   onClick={() => {
                     setTabIndex(2)
                   }}
-                  sx={{ bgcolor: '#d92d20', height: '44px', '&:hover': { bgcolor: '#c9665f' } }}
+                  sx={{ bgcolor: '#d92d20', height: '44px', borderRadius: '6px', '&:hover': { bgcolor: '#c9665f' } }}
                 >
                   <Typography className={styles.bold} variant='h4'>
                     Yes, cancel this project
@@ -379,6 +360,7 @@ const ProjectInfoModal = (props) => {
                     setTabIndex(0)
                     handleClose()
                   }}
+                  sx={{ height: '44px', borderRadius: '6px', border: 'solid 1px #d0d5dd', backgroundColor: '#fff', color: '#344054' }}
                 >
                   <Typography className={styles.bold} variant='h4'>
                     Create&nbsp;new&nbsp;project
@@ -390,7 +372,7 @@ const ProjectInfoModal = (props) => {
                     setTabIndex(0)
                     handleClose()
                   }}
-                  sx={{ height: '44px' }}
+                  sx={{ height: '44px', borderRadius: '6px' }}
                 >
                   <Typography className={styles.bold} variant='h4'>
                     Return&nbsp;to&nbsp;dashboard
@@ -404,7 +386,7 @@ const ProjectInfoModal = (props) => {
             tabIndex === 3 && (
               <Stack direction={'row'} justifyContent='space-between' sx={{ mt: 3 }}>
                 <Button variant='outlined' startIcon={<ArrowBack />}
-                  sx={{ color: 'common.black' }}
+                  sx={{ height: '44px', borderRadius: '6px', border: 'solid 1px #d0d5dd', backgroundColor: '#fff', color: '#344054' }}
                   onClick={() => {
                     setTabIndex(0)
                   }}

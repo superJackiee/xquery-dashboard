@@ -18,7 +18,7 @@ export const light = createTheme({
     },
     h4: {
       fontSize: 16,
-      fontWeight: 300,
+      fontWeight: 'normal',
       lineHeight: 1.5
     },
     h5: {
@@ -70,7 +70,7 @@ export const light = createTheme({
       paper: '#EAECF0'
     },
     common: {
-      black: '#000000',
+      black: '#101828',
       white: '#FFFFFF'
     },
     text: {
@@ -99,7 +99,7 @@ export const dark = createTheme({
     },
     h4: {
       fontSize: 16,
-      fontWeight: 300,
+      fontWeight: 'normal',
       lineHeight: 1.5
     },
     h5: {

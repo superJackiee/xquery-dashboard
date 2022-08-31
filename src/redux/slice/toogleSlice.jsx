@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  darkMode: localStorage.getItem('darkMode') || 'true',
+  // darkMode: localStorage.getItem('darkMode') || 'false',
+  darkMode: 'false'
 }
 
 export const toogleSlice = createSlice({

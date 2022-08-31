@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { setDarkMode } from "../../redux/slice/toogleSlice"
+import { useSelector } from "react-redux"
+import { useMedia } from "react-use"
+// import { setDarkMode } from "../../redux/slice/toogleSlice"
 import { Button, IconButton, Typography } from "@mui/material"
 import { ApexChart, Card, FlexColumn, FlexRow, Table } from "../../components"
 import { MenuItem as CustomMenuItem, OutsideButton } from "../../assets/styles/chart"
@@ -16,8 +17,8 @@ import telegram from "../../assets/icons/telegram.svg"
 import github from "../../assets/icons/github.svg"
 import book from "../../assets/icons/book.svg"
 import website from "../../assets/icons/website.svg"
-import darkIcon from "../../assets/icons/dark.svg"
-import lightIcon from "../../assets/icons/light.svg"
+// import darkIcon from "../../assets/icons/dark.svg"
+// import lightIcon from "../../assets/icons/light.svg"
 import avatar1 from "../../assets/avatar/avatar1.png"
 
 import ProjectModal from "../../components/Modal"
@@ -51,25 +52,25 @@ const JsonInfo = `{
 const Header = () => {
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const [createOpen, setCreateOpen] = useState(false)
   const handleOpen = () => setCreateOpen(true)
   const handleClose = () => setCreateOpen(false)
 
-  const toogleTheme = () => {
-    localStorage.setItem('darkMode', mode === 'true' ? 'false' : 'true')
-    dispatch(setDarkMode(mode === 'true' ? 'false' : 'true'))
-  }
+  // const toogleTheme = () => {
+  //   localStorage.setItem('darkMode', mode === 'true' ? 'false' : 'true')
+  //   dispatch(setDarkMode(mode === 'true' ? 'false' : 'true'))
+  // }
 
   return (
     <div style={{ background: theme.palette.info.light, borderBottom: `1px solid ${theme.palette.background.paper}` }}>
       <div className={`${styles.header}`}>
         <img src={logo} alt='logo' width={115} height={36} />
         <div className={`${styles.innerFlex}`}>
-          <IconButton sx={{ width: '40px', height: '40px' }} onClick={() => toogleTheme()}>
+          {/* <IconButton sx={{ width: '40px', height: '40px' }} onClick={() => toogleTheme()}>
             <img src={mode === 'true' ? darkIcon : lightIcon} alt='mode' width={32} height={32} />
-          </IconButton>
+          </IconButton> */}
           <Button variant='contained' onClick={handleOpen} >
             <span className={styles.newProject}>New Project</span>
             <img src={rocket} alt='rocket' />
@@ -105,6 +106,13 @@ const useStyles = makeStyles((theme) => ({
     left: '15px',
     zIndex: 10,
     color: `${theme.palette.common.black} !important`
+  },
+  overview: {
+    [theme.breakpoints.down(960)]: {
+      fontSize: '20px !important',
+      fontWeight: '500 !important',
+      lineHeight: '1.5 !important'
+    }
   }
 }))
 
@@ -136,6 +144,7 @@ const Chart = () => {
             value={value}
             // label="Select Period"
             onChange={handleChange}
+            IconComponent={(props) => (<ExpandMoreIcon sx={{ color: '#667085', marginRight: '15px' }} />)}
             className={classes.formSelect}
           >
             {
@@ -170,6 +179,8 @@ const Chart = () => {
 }
 
 const Dashboard = () => {
+  const classes = useStyles()
+  const isMobile = useMedia('(max-width: 576px)')
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const [viewModal, setViewModal] = useState(false)
@@ -202,7 +213,7 @@ const Dashboard = () => {
       <Header />
       <div className={`${styles.content}`} style={{ background: theme.palette.info.main, paddingTop: '48px' }}>
         <div className={styles.container} >
-          <Typography variant='h1' color='common.black' mb='4px'>
+          <Typography className={classes.overview} variant='h1' color='common.black' mb='4px'>
             Projects Overview
           </Typography>
           <Typography variant='h4' color='text.primary' mb='30px'>
@@ -211,41 +222,45 @@ const Dashboard = () => {
           <FlexRow style={{ gap: '20px' }} className={styles.subContainer}>
             <FlexColumn style={{ gap: '20px' }} className={styles.leftSubContainer}>
               <Chart />
-              <Table open={viewModal} handleClose={closeViewModal} handleOpen={openViewModal} />
+              <Table theme={theme} open={viewModal} handleClose={closeViewModal} handleOpen={openViewModal} />
             </FlexColumn>
             <FlexColumn style={{ gap: '20px' }} className={styles.rightSubContainer}>
               <Card className={`${styles.about}`}>
-                <Typography variant='h4' color='common.black' className={styles.title}>Getting Started with XQuery</Typography>
-                <Typography variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
-                <FlexRow className={`${styles.spaceBetween}`}>
-                  <OutsideButton variant='contained'>
-                    Support docs
-                    <img src={launch} alt="launch" />
-                  </OutsideButton>
-                  <OutsideButton variant='contained'>
-                    Join Discord
-                    <img src={launch} alt="launch" />
-                  </OutsideButton>
-                </FlexRow>
+                <div className={styles.aboutHead}>
+                  <Typography variant='h4' color='common.black' className={styles.title}>Getting Started with XQuery</Typography>
+                </div>
+                <div className={styles.aboutBody1}>
+                  <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
+                  <FlexRow className={`${styles.spaceBetween}`}>
+                    <OutsideButton variant='contained'>
+                      Support docs
+                      <img src={launch} width='20px' height='20px' alt="launch" />
+                    </OutsideButton>
+                    <OutsideButton variant='contained'>
+                      Join Discord
+                      <img src={launch} width='20px' height='20px' alt="launch" />
+                    </OutsideButton>
+                  </FlexRow>
+                </div>
               </Card>
-              <Card className={`${styles.about}`}>
+              <Card className={`${styles.about2}`}>
                 <Accordion sx={{ bgColor: 'none', background: 'none', boxShadow: 'none', width: '100%', minWidth: '200px' }}>
                   <AccordionSummary
-                    expandIcon={<ExpandMoreIcon sx={{ color: "common.black", mt: 1.2 }} />}
+                    expandIcon={<ExpandMoreIcon sx={{ color: "common.black" }} />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                    sx={{ padding: 0, alignItems: 'flex-start' }}
+                    sx={{ padding: 0, alignItems: 'flex-start', margin: '0px !important' }}
                   >
                     <div>
                       <Typography variant='h4' color='common.black' className={styles.title}>Your First Request</Typography>
-                      <Typography sx={{ mb: 2 }} variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                      <Typography variant='h5' color='text.primary' sx={{ mt: '20px', width: 'calc(100% + 25px)' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                     </div>
 
                   </AccordionSummary>
-                  <AccordionDetails sx={{ padding: 0, minWidth: '200px' }}>
+                  <AccordionDetails sx={{ padding: 0, minWidth: '200px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {/* <Typography sx={{ mb: 2 }} variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography> */}
-                    <Typography variant="h4" color='common.white' sx={{ backgroundColor: theme.palette.warning.main, padding: 2, borderRadius: 2, mb: 2, wordBreak: 'break-all', position: 'relative' }}>
-                      <pre style={{ color: theme.palette.common.white, fontFamily: 'Inter', overflowX: 'hidden' }}>{Code}</pre>
+                    <Typography variant="h5" color='common.white' sx={{ backgroundColor: theme.palette.warning.main, mt: '20px', padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
+                      <pre className={styles.codes} style={{ color: theme.palette.common.white }}>{Code}</pre>
                       {
                         copyFlag ? <Check sx={{ position: 'absolute', right: '10px', bottom: '10px' }} /> : (
                           <Button onClick={() => copyClip()} variant='contained' size='small' sx={{ position: 'absolute', right: '10px', bottom: '10px' }}>
@@ -254,56 +269,66 @@ const Dashboard = () => {
                         )
                       }
                     </Typography>
-                    <Typography sx={{ mb: 2 }} variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
-                    <Typography variant="h4" sx={{ backgroundColor: theme.palette.warning.main, padding: 2, borderRadius: 2, mb: 2, wordBreak: 'break-all', position: 'relative' }}>
-                      <pre style={{ color: theme.palette.common.white, fontFamily: 'Inter' }}>{JsonInfo}</pre>
+                    <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                    <Typography variant="h5" sx={{ backgroundColor: theme.palette.warning.main, padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
+                      <pre className={classes.codes} style={{ color: theme.palette.common.white }}>{JsonInfo}</pre>
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
               </Card>
               <Card className={`${styles.about}`}>
-                <Typography variant='h4' color='common.black' className={styles.title}>Get the latest updates</Typography>
-                <Typography variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
-                <FlexRow className={`${styles.flexStart}`}>
-                  <IconButton>
-                    <img src={twitter} alt='twitter' />
-                  </IconButton>
-                  <IconButton>
-                    <img src={reddit} alt='reddit' />
-                  </IconButton>
-                  <IconButton>
-                    <img src={discord} alt='discord' />
-                  </IconButton>
-                  <IconButton>
-                    <img src={telegram} alt='telegram' />
-                  </IconButton>
-                  <IconButton>
-                    <img src={github} alt='github' />
-                  </IconButton>
-                </FlexRow>
+                <div className={styles.aboutHead}>
+                  <Typography variant='h4' color='common.black' className={styles.title}>Get the latest updates</Typography>
+                </div>
+                <div className={styles.aboutBody2}>
+                  <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                  <FlexRow className={`${styles.flexStart}`}>
+                    <IconButton>
+                      <img src={twitter} alt='twitter' />
+                    </IconButton>
+                    <IconButton>
+                      <img src={reddit} alt='reddit' />
+                    </IconButton>
+                    <IconButton>
+                      <img src={discord} alt='discord' />
+                    </IconButton>
+                    <IconButton>
+                      <img src={telegram} alt='telegram' />
+                    </IconButton>
+                    <IconButton>
+                      <img src={github} alt='github' />
+                    </IconButton>
+                  </FlexRow>
+                </div>
               </Card>
-              <Card className={`${styles.about}`}>
-                <Typography variant='h4' color='common.black' className={styles.title}>About XQuery</Typography>
-                <Typography variant='h4' color='text.primary'>XQuery decentralizes access to indexed blockchain data, removing a critical burden of trust from the blockchain stack: centralized data providers.</Typography>
-                <div className={`${styles.divider}`} style={{ background: `${theme.palette.divider}` }} />
-                <Typography variant='h4' color='common.black' className={styles.title}>Built by The Blocknet</Typography>
-                <Typography variant='h4' color='text.primary'>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla. Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus.</Typography>
-                <FlexRow className={`${styles.flexStart}`}>
-                  <img src={website} alt='website' />
-                  <a className={`${styles.link}`} href='https://blocknet.co' target='_blank' rel='noopener noreferrer'>Blocknet.co</a>
-                </FlexRow>
-                <FlexRow className={`${styles.flexStart}`}>
-                  <img src={book} alt='book' />
-                  <a className={`${styles.link}`} href='https://docs.blocknet.co' target='_blank' rel='noopener noreferrer'>docs.blocknet.co</a>
-                </FlexRow>
-                <FlexRow className={`${styles.flexStart}`}>
-                  <img src={discord} alt='discord' />
-                  <a className={`${styles.link}`} href='#' target='_blank' rel='noreferrer'>Discord</a>{/* eslint-disable-line */}
-                </FlexRow>
-                <FlexRow className={`${styles.flexStart}`}>
-                  <img src={telegram} alt='telegram' />
-                  <a className={`${styles.link}`} href='#' target='_blank' rel='noreferrer'>Telegram</a>{/* eslint-disable-line */}
-                </FlexRow>
+              <Card className={`${styles.about1}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <Typography variant='h4' color='common.black' className={styles.title}>About XQuery</Typography>
+                  <Typography variant='h5' color='text.primary' sx={{ lineHeight: '1.43 !important', marginTop: isMobile ? '-15px' : '0px' }}>
+                    XQuery decentralizes access to indexed blockchain data, removing a critical burden of trust from the blockchain stack: centralized data providers.
+                  </Typography>
+                  <div className={`${styles.divider}`} style={{ background: `${theme.palette.divider}` }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <Typography variant='h4' color='common.black' className={styles.title}>Built by The Blocknet</Typography>
+                  <Typography variant='h5' color='text.primary' sx={{ lineHeight: '1.43 !important' }}>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla. Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus.</Typography>
+                  <FlexRow className={`${styles.flexStart}`}>
+                    <img src={website} alt='website' />
+                    <a className={`${styles.link}`} href='https://blocknet.co' target='_blank' rel='noopener noreferrer'>Blocknet.co</a>
+                  </FlexRow>
+                  <FlexRow className={`${styles.flexStart}`}>
+                    <img src={book} alt='book' />
+                    <a className={`${styles.link}`} href='https://docs.blocknet.co' target='_blank' rel='noopener noreferrer'>docs.blocknet.co</a>
+                  </FlexRow>
+                  <FlexRow className={`${styles.flexStart}`}>
+                    <img src={discord} alt='discord' />
+                    <a className={`${styles.link}`} href='#' target='_blank' rel='noreferrer'>Discord</a>{/* eslint-disable-line */}
+                  </FlexRow>
+                  <FlexRow className={`${styles.flexStart}`}>
+                    <img src={telegram} alt='telegram' />
+                    <a className={`${styles.link}`} href='#' target='_blank' rel='noreferrer'>Telegram</a>{/* eslint-disable-line */}
+                  </FlexRow>
+                </div>
               </Card>
             </FlexColumn>
           </FlexRow>

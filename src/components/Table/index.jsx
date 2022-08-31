@@ -52,6 +52,7 @@ const filterlist = [
 
 const StyledPagination = (props) => {
   const { items, curPage, length, setPage } = props
+  const classes = useStyles()
   const mobile = useMedia('(max-width: 576px)')
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
@@ -89,7 +90,7 @@ const StyledPagination = (props) => {
             } else if (type === 'page') {
               children = (
                 <IconButton
-                  style={{ color: theme.palette.common.black }}
+                  style={{ color: theme.palette.text.primary }}
                   onClick={() => setPage(page)}
                   className={`${styles.page} ${curPage === page && styles.active}`}>{page}</IconButton>
               );
@@ -98,11 +99,11 @@ const StyledPagination = (props) => {
                 <Button
                   style={{ color: theme.palette.common.black }}
                   className={`${styles.arrow}`}
-                  onClick={() => type === 'previous' ? setPage(curPage <= 1 ? curPage : curPage - 1) : setPage(curPage > Math.ceil(length / 10) ? curPage : curPage + 1)}
-                  startIcon={type === 'previous' && <img src={backward} alt='backward' />}
-                  endIcon={type === 'next' && <img src={forward} alt='forward' />}
+                  onClick={() => type === 'previous' ? setPage(curPage <= 1 ? curPage : curPage - 1) : setPage(curPage >= Math.ceil(length / 10) ? curPage : curPage + 1)}
+                  startIcon={type === 'previous' && <img src={backward} width="21px" height="21px" alt='backward' style={{ marginBottom: '2px' }} />}
+                  endIcon={type === 'next' && <img src={forward} width="21px" height="21px" alt='forward' style={{ marginBottom: '2px' }} />}
                 >
-                  {mobile && <span>{type === 'previous' ? 'Previous' : 'Next'}</span>}
+                  {!mobile && <span className={classes.pageBtn}>{type === 'previous' ? 'Previous' : 'Next'}</span>}
                 </Button>
               );
             }
@@ -122,19 +123,20 @@ const useStyles = makeStyles((theme) =>
       position: "sticky",
       right: 0,
       background: theme.palette.info.dark,
-      padding: "10px"
+      padding: "3px 10px"
     },
     cell: {
       width: '86px !important',
       borderBottom: `1px solid ${theme.palette.divider} !important`,
       whiteSpace: 'nowrap',
       textAlign: 'left',
-      [theme.breakpoints.up(860)]: {
+      [theme.breakpoints.up(960)]: {
         width: '15% !important'
       }
     },
     rowInline: {
-      [theme.breakpoints.up(860)]: {
+      [theme.breakpoints.up(960)]: {
+        maxHeight: '66px !important',
         display: "inline !important"
       }
     },
@@ -148,29 +150,40 @@ const useStyles = makeStyles((theme) =>
     },
     search: {
       height: '40px',
+      width: '400px',
+      fontSize: '14px',
       background: theme.palette.secondary.main,
       borderColor: theme.palette.background.default,
-      [theme.breakpoints.down(576)]: {
-        minWidth: '100%'
+      borderRadius: '8px',
+      [theme.breakpoints.down(960)]: {
+        width: '100%'
       }
     },
     stacks: {
-      [theme.breakpoints.down(576)]: {
+      [theme.breakpoints.down(960)]: {
         minWidth: '100%',
         flexWrap: 'wrap'
       }
     },
     filtText: {
       color: theme.palette.text.primary,
-      [theme.breakpoints.up(576)]: {
+      fontSize: '14px !important',
+      [theme.breakpoints.up(960)]: {
         display: 'none'
       }
     },
-    // icon: {
-    //   'MuiOutlinedInput-root': {
-    //     color: theme.palette.warning.main
-    //   }
-    // }
+    icon: {
+      borderRadius: '6px !important'
+    },
+    pageBtn: {
+      fontSize: '14px !important'
+    },
+    filterList: {
+      [theme.breakpoints.down(960)]: {
+        width: '20px',
+        height: '20px'
+      }
+    }
   })
 );
 
@@ -196,7 +209,7 @@ const StyledTable = (props) => {
     { projectId: 'c9f0f895fb98ab9159f51fd0297e236v', status: 'Active', usage: 25, expires: 'Aug 01, 2022' }
   ]
 
-  const { open, handleClose, handleOpen } = props
+  const { theme, open, handleClose, handleOpen } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
   const [fromFilter, setFromFilter] = useState(filterlist)
@@ -236,7 +249,7 @@ const StyledTable = (props) => {
           toFilter.map((item) => {
             return (
               <button className={styles.toFilterBtn}>
-                {item} <Close sx={{ cursor: 'pointer' }} onClick={() => handleDelete(item)} />
+                {item} <Close sx={{ cursor: 'pointer', width: '20px', height: '20px' }} onClick={() => handleDelete(item)} />
               </button>
             )
           })
@@ -246,11 +259,11 @@ const StyledTable = (props) => {
   }
 
   return (
-    <Card className={`${styles.mt30}`}>
+    <Card className={`${styles.mt10}`}>
       <div className={`${styles.header} ${classes.bottomDiv}`}>
         <FlexColumn>
           <Typography variant='h3' color='common.black' className={`${styles.title}`}>Your Projects</Typography>
-          <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
+          <Typography variant='h5' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
         </FlexColumn>
       </div>
       <div className={`${styles.filter} ${classes.bottomDiv}`}>
@@ -286,7 +299,7 @@ const StyledTable = (props) => {
           >
             <MenuItem value={0} sx={{ display: 'none' }}>
               <div className={`${styles.flexCenter} ${classes.icon}`}>
-                <FilterList /><span className={classes.filtText}>Filter</span>
+                <FilterList className={classes.filterList} sx={{ color: theme.palette.common.black }} /><span className={classes.filtText}>Filter</span>
               </div>
             </MenuItem>
             {
@@ -314,13 +327,13 @@ const StyledTable = (props) => {
                 <TableCell className={classes.cell} padding="none" component="th" scope="row">
                   <FlexColumn className={`${styles.column} ${styles.flexStart}`}>
                     <Typography className={`${styles.title}`} color='common.black' variant='h6'>Project ID</Typography>
-                    <Typography variant='h6' color='text.primary'>{data.projectId.slice(0, 8).concat('...')}</Typography>
+                    <Typography variant='h6' color='#475467' sx={{ fontWeight: '400 !important' }}>{data.projectId.slice(0, 8).concat('...')}</Typography>
                   </FlexColumn>
                 </TableCell>
                 <TableCell className={classes.cell} padding="none" align="right">
                   <FlexColumn className={`${styles.column} ${styles.flexStart}`}>
                     <Typography className={`${styles.title}`} color='common.black' variant='h6'>Status</Typography>
-                    <Typography variant='h6' color='text.primary'>{data.status}</Typography>
+                    <Typography variant='h6' color='#475467'>{data.status}</Typography>
                   </FlexColumn>
                 </TableCell>
                 <TableCell className={classes.cell} padding="none" align="right">
@@ -332,11 +345,11 @@ const StyledTable = (props) => {
                 <TableCell className={classes.cell} padding="none" align="right">
                   <FlexColumn className={`${styles.column}`}>
                     <Typography className={`${styles.title}`} color='common.black' variant='h6'>Expires</Typography>
-                    <Typography variant='h6' color='text.primary'>{data.expires}</Typography>
+                    <Typography variant='h6' color='#475467'>{data.expires}</Typography>
                   </FlexColumn>
                 </TableCell>
                 <TableCell className={`${classes.cell} ${classes.sticky}`} padding="none" align="right">
-                  <FlexColumn className={`${styles.column}`}>
+                  <FlexColumn className={`${styles.column}`} style={{ padding: '12px 0px 12px 35px' }}>
                     <div className={styles.infoBtn} onClick={handleOpen}>
                       <Typography variant='h5' color='white' className={styles.info} style={{ whiteSpace: 'nowrap' }}>
                         View project info
