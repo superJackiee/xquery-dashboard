@@ -32,15 +32,25 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down(960)]: {
         fontSize: '14px !important'
       }
+    },
+    verify: {
+      background: 'rgb(0, 0, 0, 0.4)',
+      zIndex: 100000,
+      position: 'fixed',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0
     }
   })
 );
 
-const Login = () => {
+const Login = (props) => {
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const classes = useStyles()
 
+  const { loading, setDirect } = props
   const [{ wallet }, connect] = useConnectWallet() // eslint-disable-line
   const connectedWallets = useWallets()
   const [web3Onboard, setWeb3Onboard] = useState(null) // eslint-disable-line
@@ -60,21 +70,32 @@ const Login = () => {
     window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWalletsLabelArray))
   }, [connectedWallets, wallet])
 
+  const handleConnect = async () => {
+    if (!wallet) {
+      await connect()
+    } else {
+      setDirect(true)
+    }
+  }
+
   return (
-    <div className={styles.back} style={{ background: theme.palette.info.main }}>
-      <Box className={styles.wrapper}>
-        <FlexColumn className={styles.alignCenter}>
-          <img className={classes.logo} src={logo} alt='logo' width={194} height={61} />
-          <Typography className={classes.logTitle} variant='h2' color='common.black' textAlign='center' mt='30px'>Connect a wallet to login.</Typography>
-          <Typography className={styles.subtitle} variant='h4' color='text.primary'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit
-          </Typography>
-          <Button variant='contained' fullWidth sx={{ mt: '32px', padding: '10px 18px' }} onClick={() => connect().then(console.log)}>
-            <Typography className={classes.connectBtn} variant='button' color='white'>Connect Wallet</Typography>
-          </Button>
-        </FlexColumn>
-      </Box>
-    </div>
+    <>
+      {loading && <div className={classes.verify} />}
+      <div className={styles.back} style={{ background: theme.palette.info.main }}>
+        <Box className={styles.wrapper}>
+          <FlexColumn className={styles.alignCenter}>
+            <img className={classes.logo} src={logo} alt='logo' width={194} height={61} />
+            <Typography className={classes.logTitle} variant='h2' color='common.black' textAlign='center' mt='30px'>Connect a wallet to login.</Typography>
+            <Typography className={styles.subtitle} variant='h4' color='text.primary'>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit
+            </Typography>
+            <Button variant='contained' fullWidth sx={{ mt: '32px', padding: '10px 18px' }} onClick={() => handleConnect()}>
+              <Typography className={classes.connectBtn} variant='button' color='white'>Connect Wallet</Typography>
+            </Button>
+          </FlexColumn>
+        </Box>
+      </div>
+    </>
   )
 }
 

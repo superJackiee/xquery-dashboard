@@ -18,7 +18,6 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { NEW_PROJECT_MSG } from '../../configs'
 import { Avatar } from '@mui/material'
 
 import {
@@ -33,14 +32,10 @@ import layer2 from '../../assets/icons/layer2.svg'
 import help from "../../assets/icons/help.svg"
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-
-
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { setProject } from '../../redux/slice/projectSlice'
-import { useConnectWallet } from '@web3-onboard/react'
-import { ethers } from 'ethers'
-
+// import { useConnectWallet } from '@web3-onboard/react'
 
 const style = {
   bgcolor: 'background.paper',
@@ -152,8 +147,8 @@ const filterlist = [
 ]
 
 const ProjectModal = (props) => {
-  const { open, handleClose } = props
-  const [{ wallet }] = useConnectWallet()
+  const { open, signature, handleClose } = props
+  // const [{ wallet }] = useConnectWallet()
 
   const mode = useSelector((state) => state.toogle.darkMode)
   const dispatch = useDispatch()
@@ -175,24 +170,21 @@ const ProjectModal = (props) => {
   // const [loading, setLoading] = useState(false)
 
   const onClickDetail = async () => {
-    const body = {
-      "id": 1,
-      "method": "request_project",
-      "params": []
-    }
-    try {
-      const provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
-      const signer = provider.getSigner()
-      const signature = await signer.signMessage(NEW_PROJECT_MSG)
-      console.log(signature, wallet.accounts[0])
-      const verify = await api.project.verifySignature({ signature: signature, wallet: wallet.accounts[0].address })
-      console.log("verify:", verify)
-      const result = await api.project.createProject(body)
-      dispatch(setProject(result?.data?.result))
-      setNewProj(result?.data?.result)
-      setTabIndex(1)
-    } catch (error) {
-      console.log("error:", error)
+    console.log("signature:", signature)
+    if (signature) {
+      const body = {
+        "id": 1,
+        "method": "request_project",
+        "params": []
+      }
+      try {
+        const result = await api.project.createProject(body)
+        dispatch(setProject(result?.data?.result))
+        setNewProj(result?.data?.result)
+        setTabIndex(1)
+      } catch (error) {
+        console.log("error:", error)
+      }
     }
   }
 

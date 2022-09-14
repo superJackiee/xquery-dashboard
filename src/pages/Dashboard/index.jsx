@@ -19,7 +19,7 @@ import book from "../../assets/icons/book.svg"
 import website from "../../assets/icons/website.svg"
 // import darkIcon from "../../assets/icons/dark.svg"
 // import lightIcon from "../../assets/icons/light.svg"
-import avatar1 from "../../assets/avatar/avatar1.png"
+// import avatar1 from "../../assets/avatar/avatar1.png"
 
 import ProjectModal from "../../components/Modal"
 
@@ -49,7 +49,7 @@ const JsonInfo = `{
     "result": "0x16c131ea72" 
 }`
 
-const Header = () => {
+const Header = ({ signature }) => {
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   // const dispatch = useDispatch()
@@ -75,10 +75,10 @@ const Header = () => {
             <span className={styles.newProject}>New Project</span>
             <img src={rocket} alt='rocket' />
           </Button>
-          <img src={avatar1} alt='avatar' width={40} height={40} />
+          {/* <img src={avatar1} alt='avatar' width={40} height={40} /> */}
         </div>
       </div>
-      <ProjectModal open={createOpen} handleClose={handleClose} />
+      <ProjectModal open={createOpen} signature={signature} handleClose={handleClose} />
     </div >
   )
 }
@@ -165,7 +165,7 @@ const Chart = () => {
                 <CustomMenuItem
                   key={index}
                   variant='contained'
-                  active={activeStatus === index}
+                  active={activeStatus === index ? 'true' : 'false'}
                   onClick={() => changeStatus(index)}
                 >{duration}</CustomMenuItem>
               )
@@ -178,7 +178,7 @@ const Chart = () => {
   )
 }
 
-const Dashboard = () => {
+const Dashboard = ({ signature }) => {
   const classes = useStyles()
   const isMobile = useMedia('(max-width: 576px)')
   const mode = useSelector((state) => state.toogle.darkMode)
@@ -210,7 +210,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header />
+      <Header signature={signature} />
       <div className={`${styles.content}`} style={{ background: theme.palette.info.main, paddingTop: '48px' }}>
         <div className={styles.container} >
           <Typography className={classes.overview} variant='h1' color='common.black' mb='4px'>
