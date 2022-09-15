@@ -230,13 +230,13 @@ const Dashboard = ({ signature }) => {
                   <Typography variant='h4' color='common.black' className={styles.title}>Getting Started with XQuery</Typography>
                 </div>
                 <div className={styles.aboutBody1}>
-                  <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
+                  <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
                   <FlexRow className={`${styles.spaceBetween}`}>
-                    <OutsideButton variant='contained'>
+                    <OutsideButton href="https://docs.blocknet.co" variant='contained'>
                       Support docs
                       <img src={launch} width='20px' height='20px' alt="launch" />
                     </OutsideButton>
-                    <OutsideButton variant='contained'>
+                    <OutsideButton href="https://discord.gg/mZ6pTneMx3" variant='contained'>
                       Join Discord
                       <img src={launch} width='20px' height='20px' alt="launch" />
                     </OutsideButton>
@@ -253,13 +253,13 @@ const Dashboard = ({ signature }) => {
                   >
                     <div>
                       <Typography variant='h4' color='common.black' className={styles.title}>Your First Request</Typography>
-                      <Typography variant='h5' color='text.primary' sx={{ mt: '20px', width: 'calc(100% + 25px)' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                      <Typography variant='p' color='text.primary' sx={{ mt: '20px', width: 'calc(100% + 25px)' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                     </div>
 
                   </AccordionSummary>
                   <AccordionDetails sx={{ padding: 0, minWidth: '200px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {/* <Typography sx={{ mb: 2 }} variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography> */}
-                    <Typography variant="h5" color='common.white' sx={{ backgroundColor: theme.palette.warning.main, mt: '20px', padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
+                    <Typography variant='p' color='common.white' sx={{ backgroundColor: theme.palette.warning.main, mt: '20px', padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
                       <pre className={styles.codes} style={{ color: theme.palette.common.white }}>{Code}</pre>
                       {
                         copyFlag ? <Check sx={{ position: 'absolute', right: '10px', bottom: '10px' }} /> : (
@@ -269,8 +269,8 @@ const Dashboard = ({ signature }) => {
                         )
                       }
                     </Typography>
-                    <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
-                    <Typography variant="h5" sx={{ backgroundColor: theme.palette.warning.main, padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
+                    <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                    <Typography variant='p' sx={{ backgroundColor: theme.palette.warning.main, padding: 2, borderRadius: 2, wordBreak: 'break-all', position: 'relative' }}>
                       <pre className={classes.codes} style={{ color: theme.palette.common.white }}>{JsonInfo}</pre>
                     </Typography>
                   </AccordionDetails>
@@ -281,7 +281,7 @@ const Dashboard = ({ signature }) => {
                   <Typography variant='h4' color='common.black' className={styles.title}>Get the latest updates</Typography>
                 </div>
                 <div className={styles.aboutBody2}>
-                  <Typography variant='h5' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
+                  <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <IconButton>
                       <img src={twitter} alt='twitter' />
@@ -304,14 +304,14 @@ const Dashboard = ({ signature }) => {
               <Card className={`${styles.about1}`}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <Typography variant='h4' color='common.black' className={styles.title}>About XQuery</Typography>
-                  <Typography variant='h5' color='text.primary' sx={{ lineHeight: '1.43 !important', marginTop: isMobile ? '-15px' : '0px' }}>
+                  <Typography variant='p' color='text.primary' sx={{ lineHeight: '1.43 !important', marginTop: isMobile ? '-15px' : '0px' }}>
                     XQuery decentralizes access to indexed blockchain data, removing a critical burden of trust from the blockchain stack: centralized data providers.
                   </Typography>
                   <div className={`${styles.divider}`} style={{ background: `${theme.palette.divider}` }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <Typography variant='h4' color='common.black' className={styles.title}>Built by The Blocknet</Typography>
-                  <Typography variant='h5' color='text.primary' sx={{ lineHeight: '1.43 !important' }}>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla. Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus.</Typography>
+                  <Typography variant='p' color='text.primary' sx={{ lineHeight: '1.43 !important' }}>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla. Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus.</Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={website} alt='website' />
                     <a className={`${styles.link}`} href='https://blocknet.co' target='_blank' rel='noopener noreferrer'>Blocknet.co</a>

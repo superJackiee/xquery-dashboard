@@ -263,7 +263,7 @@ const StyledTable = (props) => {
       <div className={`${styles.header} ${classes.bottomDiv}`}>
         <FlexColumn>
           <Typography variant='h3' color='common.black' className={`${styles.title}`}>Your Projects</Typography>
-          <Typography variant='h5' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
+          <Typography variant='p' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
         </FlexColumn>
       </div>
       <div className={`${styles.filter} ${classes.bottomDiv}`}>
