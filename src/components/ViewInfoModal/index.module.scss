@@ -14,6 +14,10 @@
     margin-top: 0px;
   }
 
+  .key {
+    color: #344054 !important;
+  }
+
   .divider {
     width: 100%;
     height: 1px;
@@ -59,6 +63,7 @@
         justify-content: flex-end;
         align-items: center;
         padding: 10px;
+        background: #f2f4f7 !important;
       }
     }
 
@@ -114,6 +119,8 @@
       .left {
         width: 40%;
         text-align: left;
+        color: #344054;
+        font-weight: 500;
       }
 
       .right {
@@ -128,6 +135,8 @@
       padding: 20px 15px;
       border-radius: 8px;
     }
+
+    font-size: 14px !important;
   }
 }
 
@@ -140,14 +149,17 @@
   align-items: center;
   gap: 5px;
   width: 350px;
+  color: #344054;
 }
 
 .left {
+  color: #344054 !important;
   font-size: 14px !important;
   font-weight: 600 !important;
 }
 
 .right {
+  color: #344054 !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   width: 60% !important;
@@ -161,6 +173,10 @@
 .payRight {
   width: 60%;
   gap: 5px;
+}
+
+.mobileDisplay {
+  font-size: 14px !important;
 }
 
 @media (max-width: 576px) {
@@ -177,6 +193,7 @@
     transform: translateX(-50%);
 
     .mobileDisplay {
+      font-size: 14px !important;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;

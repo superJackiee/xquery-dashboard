@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { light, dark } from '../../theme'
 
 import styles from "./index.module.scss"
+import { useMedia } from "react-use"
 
 const ApexChart = () => {
   const dataSet = [
@@ -12,6 +13,7 @@ const ApexChart = () => {
     [390, 395, 392, 405, 410, 420, 400, 430, 460, 440, 445, 450]
   ]
 
+  const isMobile = useMedia('(max-width: 768px)')
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
 
@@ -47,7 +49,7 @@ const ApexChart = () => {
     },
     grid: {
       padding: {
-        left: -5,
+        left: isMobile ? -5 : 5,
         right: 5
       }
     },
@@ -56,7 +58,8 @@ const ApexChart = () => {
         text: 'Number of calls',
         style: {
           color: theme.palette.text.primary,
-          fontFamily: 'Inter',
+          fontSize: '12px',
+          fontFamily: 'Inter !important',
           fontWeight: 500
         }
       },
@@ -64,6 +67,7 @@ const ApexChart = () => {
         style: {
           colors: theme.palette.text.primary,
           fontFamily: 'Inter',
+          fontSize: '12px'
         },
         offsetX: 0,
         formatter: function (val) {
@@ -83,6 +87,7 @@ const ApexChart = () => {
         text: 'Month',
         style: {
           color: theme.palette.text.primary,
+          fontSize: '12px',
           fontFamily: 'Inter',
           fontWeight: 500
         }
@@ -91,7 +96,8 @@ const ApexChart = () => {
       labels: {
         style: {
           colors: theme.palette.text.primary,
-          fontFamily: 'Inter'
+          fontFamily: 'Inter !important',
+          fontSize: '12px'
         },
         offsetX: 5,
         formatter: function (val, timestamp) {
@@ -124,11 +130,6 @@ const ApexChart = () => {
             labels: {
               show: false
             }
-          },
-          legend: {
-            position: 'top',
-            horizontalAlign: 'left',
-            offsetX: -20
           }
         }
       },
@@ -138,7 +139,7 @@ const ApexChart = () => {
   return (
     <div id="chart" style={{ width: '100%' }}>
       {/* @ts-ignore */}
-      <ReactApexChart className={styles.chartBody} options={options} series={series} type="area" />
+      <ReactApexChart className={styles.chartBody} options={options} series={series} type="area" height={isMobile ? "230" : "385"} />
     </div>
   )
 }

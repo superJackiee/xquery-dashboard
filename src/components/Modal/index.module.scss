@@ -6,19 +6,42 @@
   transform: translate(-50%, -50%);
   max-width: 700px;
   width: 90vw;
-  border: 2px solid #000;
+  background-color: #f9fafb !important;
   box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.03), 0 20px 24px -4px rgba(16, 24, 40, 0.08);
   padding: 24px;
-  border-radius: 8px;
+
+  .chipEth {
+    color: #175cd3 !important;
+    background-color: #eff8ff !important;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
+
+  .chipAvax {
+    color: #c01048 !important;
+    background-color: #fff1f3 !important;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
+
+  .chipBsc {
+    color: #854a0e !important;
+    background-color: #fef7c3 !important;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
 
   .tableBody {
-    max-width: 630px;
     width: 100%;
+    box-shadow: none !important;
+    border-radius: 0px;
+    border: 1px solid #eaecf0;
   }
 
   .title {
     text-align: center;
-    margin-top: 0px;
+    margin-top: -10px !important;
+    font-size: 20px !important;
   }
 
   .divider {
@@ -30,8 +53,8 @@
   .subTItle {
     text-align: left;
     font-family: Inter;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 16px !important;
+    font-weight: 500 !important;
     margin-top: 30px;
   }
 
@@ -52,7 +75,7 @@
       justify-content: center;
       align-items: center;
       gap: 5px;
-      background-color: #f9f5ff;
+      background-color: #eceaf7;
       color: #6941c6;
       border: none;
       padding: 7px 10px;
@@ -74,27 +97,44 @@
         padding: 10px;
       }
 
-
-      .tabaleBody {
-        .headItem {
-          width: 184px;
-        }
-
-        .info {
-          display: flex;
-        }
-
-        .infoMobile {
-          display: none;
-        }
+      .headItem {
+        padding: 15px !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        color: #344054 !important;
       }
 
+      .headItem1 {
+        width: 133px !important;
+        align-items: center !important;
+      }
 
+      .headItem2 {
+        width: 184px !important;
+        align-items: center !important;
+      }
 
-    }
+      .headItem3 {
+        width: 149px !important;
+        align-items: center !important;
+      }
 
-    .cancelBtn {
-      margin-top: 10px;
+      .headItem4 {
+        width: 163px !important;
+      }
+
+      .helpIcon {
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+
+      .info {
+        display: flex;
+      }
+
+      .infoMobile {
+        display: none;
+      }
     }
 
     .infoMobile {
@@ -184,15 +224,15 @@
     }
   }
 
-  // .tab3 {
-  //   .projectInfo {
-  //     padding: 20px 15px;
-  //     border-radius: 8px;
-
-  //     .infoDesc {}
-
-  //   }
-  // }
+  .cancelBtn {
+    width: 120px !important;
+    height: 44px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05) !important;
+    border: solid 1px #d0d5dd !important;
+    margin-top: 10px;
+    margin: 0 auto !important;
+  }
 }
 
 
@@ -206,11 +246,8 @@
     width: 30px;
     height: 6px;
     background: #e9d7fe;
-    /* border-radius: 50%; */
-    margin: 0 16px;
+    border-radius: 2px;
     cursor: pointer;
-
-
   }
 }
 
@@ -220,7 +257,6 @@
 
 @media (max-width: 576px) {
   .modalNewBox {
-
     .address {
       display: flex;
       align-items: center;
@@ -261,6 +297,37 @@
           .infoMobile {
             display: flex;
           }
+        }
+
+        .headItem {
+          padding: 10px !important;
+          font-size: 12px !important;
+          font-weight: 500 !important;
+          color: #344054 !important;
+        }
+
+        .headItem1 {
+          width: 109px !important;
+          align-items: center !important;
+        }
+
+        .headItem2 {
+          width: 120px !important;
+          align-items: center !important;
+        }
+
+        .headItem3 {
+          width: 115px !important;
+          align-items: center !important;
+        }
+
+        .headItem4 {
+          width: 114px !important;
+        }
+
+        .helpIcon {
+          margin-left: 5px;
+          vertical-align: middle;
         }
       }
     }

@@ -11,7 +11,7 @@ const MenuWrapper = styled(Button)`
   box-shadow: none;
   padding: 8px 12px;
   margin-right: 3px;
-  color: ${({ active, theme }) => active === true ? theme.palette.primary.dark : theme.palette.text.primary};
+  color: ${({ active, theme }) => active === 'true' ? theme.palette.primary.dark : theme.palette.text.primary};
   background-color: ${({ active, theme }) => active === true ? theme.palette.primary.light : 'transparent'};
   &:hover {
     color: white;

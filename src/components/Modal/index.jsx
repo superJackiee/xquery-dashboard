@@ -18,7 +18,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Avatar, CircularProgress } from '@mui/material'
+import { Avatar } from '@mui/material'
 
 import {
   FilterList, Close, HelpOutline, CheckCircleOutline, RadioButtonUnchecked,
@@ -29,14 +29,13 @@ import {
 import info from "../../assets/icons/info.svg"
 import styles from './index.module.scss'
 import layer2 from '../../assets/icons/layer2.svg'
+import help from "../../assets/icons/help.svg"
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-
-
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { setProject } from '../../redux/slice/projectSlice'
-
+// import { useConnectWallet } from '@web3-onboard/react'
 
 const style = {
   bgcolor: 'background.paper',
@@ -148,7 +147,8 @@ const filterlist = [
 ]
 
 const ProjectModal = (props) => {
-  const { open, handleClose } = props
+  const { open, signature, handleClose } = props
+  // const [{ wallet }] = useConnectWallet()
 
   const mode = useSelector((state) => state.toogle.darkMode)
   const dispatch = useDispatch()
@@ -167,24 +167,24 @@ const ProjectModal = (props) => {
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
   const onClickDetail = async () => {
-    const body = {
-      "id": 1,
-      "method": "request_project",
-      "params": []
-    }
-    try {
-      setLoading(true)
-      const result = await api.project.createProject(body)
-      setLoading(false)
-      dispatch(setProject(result?.data?.result))
-      setNewProj(result?.data?.result)
-      setTabIndex(1)
-    } catch (error) {
-      console.log("error:", error)
-      setLoading(false)
+    console.log("signature:", signature)
+    if (signature) {
+      const body = {
+        "id": 1,
+        "method": "request_project",
+        "params": []
+      }
+      try {
+        const result = await api.project.createProject(body)
+        dispatch(setProject(result?.data?.result))
+        setNewProj(result?.data?.result)
+        setTabIndex(1)
+      } catch (error) {
+        console.log("error:", error)
+      }
     }
   }
 
@@ -244,10 +244,10 @@ const ProjectModal = (props) => {
       >
         <Box sx={style} className={styles.modalNewBox}>
           <Stack direction='row' justifyContent='flex-end'>
-            <Close sx={{ fontSize: '25px', cursor: 'pointer', color: 'common.black' }} onClick={handleClose} />
+            <Close sx={{ fontSize: '24px', cursor: 'pointer', color: '#98a2b3 !important', margin: '-14px -14px 0px 0px' }} onClick={handleClose} />
           </Stack>
           <Typography id="modal-modal-title" variant="h2" component="h2"
-            className={styles.title}
+            className={`${styles.title}`}
             color='common.black'
           >
             {
@@ -255,8 +255,8 @@ const ProjectModal = (props) => {
             }
           </Typography>
           <div className={`${styles.divider}`} style={{ background: `${theme.palette.divider}` }} />
-          <Typography className={styles.subTitle} color='common.black'>
-            Your Project Detail1
+          <Typography className={styles.subTitle} color='#344054' sx={{ fontSize: '16px !important', fontWeight: '500 !important' }}>
+            Your Project Details
           </Typography>
           <Typography className={styles.desc} color='text.primary' sx={{ mb: '10px' }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non.
@@ -291,17 +291,12 @@ const ProjectModal = (props) => {
                         onChange={handleChange}
                         autoWidth
                         sx={{
-                          '.MuiSvgIcon-root.MuiSelect-iconOutlined': { display: 'none !important' },
-                          '.css-1foykdk-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1foykdk-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-1foykdk-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input': {
-                            padding: '6.5px 20px !important',
-                            color: 'warning.main',
-                            backgroundColor: 'secondary.main'
-                          },
-                          // '.css-i4bv87-MuiSvgIcon-root': { color: 'common.black' },
                           boxSizing: 'border-box',
-                          // width: '50px', height: '40px',
                           color: 'common.black',
-                          borderRadius: '6px'
+                          borderRadius: '6px',
+                          backgroundColor: '#ffffff',
+                          width: '133px',
+                          height: '36px'
                         }}
                       >
                         <MenuItem value={0} sx={{ display: 'none' }}>
@@ -319,14 +314,23 @@ const ProjectModal = (props) => {
                     </Stack>
                   </div>
 
-                  <TableContainer component={Paper} className={styles.tableBody} style={{ maxWidth: '640px', width: '100%' }}>
+                  <TableContainer component={Paper} className={styles.tableBody} style={{ width: '100%' }}>
                     <Table sx={{ minWidth: 400 }} aria-label="customized table" >
-                      <TableHead sx={{ backgroundColor: '#eaecf0' }}>
+                      <TableHead>
                         <TableRow>
-                          <StyledTableCell className={styles.headItem}>Host Server IP</StyledTableCell>
-                          <StyledTableCell align="left" className={styles.headItem}>Supported Networks</StyledTableCell>
-                          <StyledTableCell align="left" className={styles.headItem}>Monthly cost</StyledTableCell>
-                          <StyledTableCell align="left" className={`${styles.headItem} ${classes.sticky}`}>Server info</StyledTableCell>
+                          <StyledTableCell className={`${styles.headItem} ${styles.headItem1}`}>
+                            Host Server IP
+                            <img src={help} className={styles.helpIcon} width='16px' height='16px' alt='help' />
+                          </StyledTableCell>
+                          <StyledTableCell align="left" className={`${styles.headItem} ${styles.headItem2}`}>
+                            Supported Networks
+                            <img src={help} className={styles.helpIcon} width='16px' height='16px' alt='help' />
+                          </StyledTableCell>
+                          <StyledTableCell align="left" className={`${styles.headItem} ${styles.headItem3}`}>
+                            Monthly cost
+                            <img src={help} className={styles.helpIcon} width='16px' height='16px' alt='help' />
+                          </StyledTableCell>
+                          <StyledTableCell align="left" className={`${`${styles.headItem} ${styles.headItem4}`} ${classes.sticky}`}>Server info</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody sx={{ backgroundColor: 'white' }}>
@@ -334,8 +338,8 @@ const ProjectModal = (props) => {
                           <StyledTableRow key={index}>
                             <StyledTableCell component="th" scope="row">
                               <Stack direction={'column'}>
-                                <div style={{ color: '#344054' }}>{row.ip[0]}</div>
-                                <div style={{ color: '#344054' }}>{row.ip[1]}</div>
+                                <div style={{ color: '#344054', fontWeight: '500' }}>{row.ip[0]}</div>
+                                <div style={{ color: '#667085' }}>{row.ip[1]}</div>
                               </Stack>
                             </StyledTableCell>
                             <StyledTableCell align="left">
@@ -345,9 +349,9 @@ const ProjectModal = (props) => {
                                     return <Chip key={network} label={network} size='small' color="primary" />
                                   })
                                 } */}
-                                <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff', width: 'fit-content' }} />
-                                <Chip label={'AVAX'} size='small' sx={{ color: '#c01048', backgroundColor: '#fff1f3', width: 'fit-content' }} />
-                                <Chip label={'BSC'} size='small' sx={{ color: '#854a0e', backgroundColor: '#fef7c3', width: 'fit-content' }} />
+                                <Chip label={'ETH'} size='small' className={styles.chipEth} />
+                                <Chip label={'AVAX'} size='small' className={styles.chipAvax} />
+                                <Chip label={'BSC'} size='small' className={styles.chipBsc} />
                               </Stack>
                             </StyledTableCell>
                             <StyledTableCell align="left">
@@ -361,7 +365,7 @@ const ProjectModal = (props) => {
                                 onClick={onClickDetail}
                               >
                                 <Typography variant='h5' >
-                                  View&nbsp;details
+                                  View details
                                 </Typography>
                               </Button>
                               <Button variant='contained' className={styles.infoMobile} onClick={onClickDetail}><img src={info} alt='info' /></Button>
@@ -572,17 +576,17 @@ const ProjectModal = (props) => {
                       }} />
                     </Stack>
                   </Stack>
-                  <Stack direction='row' justifyContent={'space-between'}>
+                  <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
                       <div>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px' }} />
                     </Stack>
-                    <div>$200</div>
+                    <div style={{ fontSize: '14px' }}>$200</div>
                   </Stack>
-                  <Stack direction='row' justifyContent={'space-between'}>
+                  <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
                       <div>Service Level: </div><HelpOutline sx={{ fontSize: '20px' }} />
                     </Stack>
-                    <div>Tier 2 - 32 million requests / month</div>
+                    <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
                   </Stack>
                 </Stack>
                 <div className={styles.detail}>
@@ -637,7 +641,7 @@ const ProjectModal = (props) => {
 
 
           <Stack
-            direction={'row'} justifyContent='center' spacing={2}
+            direction={'row'} justifyContent='center' gap='10px'
             className={styles.dotsBody}
           >
             {
@@ -649,9 +653,9 @@ const ProjectModal = (props) => {
 
           {
             tabIndex === 0 && (
-              <Stack direction='row' justifyContent='center' className={styles.cancelBtn}>
-                <Button variant='outlined' onClick={handleClose} sx={{ color: 'common.black' }} >Cancel</Button>
-              </Stack>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <Button className={styles.cancelBtn} variant='outlined' onClick={handleClose} sx={{ color: 'common.black' }} >Cancel</Button>
+              </div>
             )
           }
 

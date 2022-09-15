@@ -3,17 +3,17 @@ import blocknativeIcon from './icons/blocknative-icon'
 
 import { init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
-import trezorModule from '@web3-onboard/trezor'
-import ledgerModule from '@web3-onboard/ledger'
+// import trezorModule from '@web3-onboard/trezor'
+// import ledgerModule from '@web3-onboard/ledger'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import coinbaseModule from '@web3-onboard/coinbase'
-import portisModule from '@web3-onboard/portis'
-import magicModule from '@web3-onboard/magic'
-import fortmaticModule from '@web3-onboard/fortmatic'
-import torusModule from '@web3-onboard/torus'
-import keepkeyModule from '@web3-onboard/keepkey'
-import gnosisModule from '@web3-onboard/gnosis'
-import web3authModule from '@web3-onboard/web3auth'
+// import portisModule from '@web3-onboard/portis'
+// import magicModule from '@web3-onboard/magic'
+// import fortmaticModule from '@web3-onboard/fortmatic'
+// import torusModule from '@web3-onboard/torus'
+// import keepkeyModule from '@web3-onboard/keepkey'
+// import gnosisModule from '@web3-onboard/gnosis'
+// import web3authModule from '@web3-onboard/web3auth'
 
 // Replace with your DApp's Infura ID
 const INFURA_ID = 'cea9deb6467748b0b81b920b005c10c1'
@@ -24,53 +24,53 @@ const injected = injectedModule()
 const coinbase = coinbaseModule()
 const walletConnect = walletConnectModule()
 
-const portis = portisModule({
-  apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-})
+// const portis = portisModule({
+//   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+// })
 
-const fortmatic = fortmaticModule({
-  apiKey: 'pk_test_886ADCAB855632AA'
-})
+// const fortmatic = fortmaticModule({
+//   apiKey: 'pk_test_886ADCAB855632AA'
+// })
 
-const torus = torusModule()
-const ledger = ledgerModule()
-const keepkey = keepkeyModule()
+// const torus = torusModule()
+// const ledger = ledgerModule()
+// const keepkey = keepkeyModule()
 
-const gnosis = gnosisModule()
+// const gnosis = gnosisModule()
 
-const trezorOptions = {
-  email: 'test@test.com',
-  appUrl: 'https://www.blocknative.com'
-}
+// const trezorOptions = {
+//   email: 'test@test.com',
+//   appUrl: 'https://www.blocknative.com'
+// }
 
-const trezor = trezorModule(trezorOptions)
+// const trezor = trezorModule(trezorOptions)
 
-const magic = magicModule({
-  // Example api key, may need to be updated when max hits reached
-  // Get one to test with for free from https://magic.link/
-  apiKey: 'pk_live_02207D744E81C2BA',
-  userEmail: localStorage.getItem('magicUserEmail')
-})
+// const magic = magicModule({
+//   // Example api key, may need to be updated when max hits reached
+//   // Get one to test with for free from https://magic.link/
+//   apiKey: 'pk_live_02207D744E81C2BA',
+//   userEmail: localStorage.getItem('magicUserEmail')
+// })
 
-const web3auth = web3authModule({
-  clientId:
-    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
-})
+// const web3auth = web3authModule({
+//   clientId:
+//     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+// })
 
 export const initWeb3Onboard = init({
   wallets: [
     injected,
-    ledger,
+    // ledger,
     coinbase,
-    trezor,
+    // trezor,
     walletConnect,
-    web3auth,
-    gnosis,
-    magic,
-    fortmatic,
-    keepkey,
-    portis,
-    torus
+    // web3auth,
+    // gnosis,
+    // magic,
+    // fortmatic,
+    // keepkey,
+    // portis,
+    // torus
   ],
   chains: [
     {
@@ -168,7 +168,6 @@ export const initWeb3Onboard = init({
   apiKey: dappId,
   notify: {
     transactionHandler: transaction => {
-      console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
           // autoDismiss set to zero will persist the notification until the user excuses it
