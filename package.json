@@ -1,6 +1,7 @@
 {
   "name": "onboard-notify-react",
   "version": "0.24.0",
+  "license": "MIT",
   "dependencies": {
     "@craco/craco": "^5.8.3",
     "@emotion/react": "^11.9.3",
