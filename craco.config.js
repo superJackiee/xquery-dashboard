@@ -9,6 +9,6 @@ module.exports = {
         __dirname,
         "node_modules/magic-sdk/dist/cjs/index.js"
       ),
-    },
+    }
   },
 };

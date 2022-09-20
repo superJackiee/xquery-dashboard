@@ -5,7 +5,20 @@ const localEndpoint = `https://xquery-backend.herokuapp.com/api/sign`
 
 const projectApi = {
   createProject: (param) => axios.post(projectEndpoint, param),
-  verifySignature: (param) => axios.get(`${localEndpoint}?signature=${param.signature}&wallet=${param.wallet}`)
+  verifySignature: (param) => axios.get(`${localEndpoint}?signature=${param.signature}&wallet=${param.wallet}`),
+  getProjectStats: (param) =>
+    axios({
+      method: 'post',
+      url: projectEndpoint + '/' + param.projectId,
+      headers: {
+        'Api-Key': param.apiKey
+      },
+      data: {
+        "id": 1,
+        "method": "get_project_stats",
+        "params": []
+      }
+    })
 }
 
 export default projectApi

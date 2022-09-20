@@ -20,6 +20,7 @@ const ApexChart = () => {
   const series = [
     { name: 'This period', data: dataSet[0] },
     { name: 'Previous period', data: dataSet[1] }]
+
   const options = {
     colors: [theme.palette.success.dark, theme.palette.success.light],
     chart: {

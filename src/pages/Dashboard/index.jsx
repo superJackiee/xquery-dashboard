@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import { useMedia } from "react-use"
+import { useNotifications } from "@web3-onboard/react"
 // import { setDarkMode } from "../../redux/slice/toogleSlice"
 import { Button, IconButton, Typography } from "@mui/material"
-import { ApexChart, Card, FlexColumn, FlexRow, Table } from "../../components"
+import { ApexChart, Card, FlexColumn, FlexRow, StyledTable } from "../../components"
 import { MenuItem as CustomMenuItem, OutsideButton } from "../../assets/styles/chart"
 import { light, dark } from "../../theme"
 import styles from "./index.module.scss"
@@ -49,7 +50,7 @@ const JsonInfo = `{
     "result": "0x16c131ea72" 
 }`
 
-const Header = ({ signature }) => {
+const Header = ({ signature, customNotification }) => {
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   // const dispatch = useDispatch()
@@ -78,7 +79,7 @@ const Header = ({ signature }) => {
           {/* <img src={avatar1} alt='avatar' width={40} height={40} /> */}
         </div>
       </div>
-      <ProjectModal open={createOpen} signature={signature} handleClose={handleClose} />
+      <ProjectModal customNotification={customNotification} open={createOpen} signature={signature} handleClose={handleClose} />
     </div >
   )
 }
@@ -183,8 +184,9 @@ const Dashboard = ({ signature }) => {
   const isMobile = useMedia('(max-width: 576px)')
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
-  const [viewModal, setViewModal] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const [copyFlag, setCopyFlag] = useState(false)
+  const [customNotification] = useNotifications()
 
   const copyClip = () => {
     if (!Code) {
@@ -200,17 +202,9 @@ const Dashboard = ({ signature }) => {
     setCopyFlag(true)
   }
 
-  const openViewModal = () => {
-    setViewModal(true)
-  }
-
-  const closeViewModal = () => {
-    setViewModal(false)
-  }
-
   return (
     <>
-      <Header signature={signature} />
+      <Header signature={signature} customNotification={customNotification} />
       <div className={`${styles.content}`} style={{ background: theme.palette.info.main, paddingTop: '48px' }}>
         <div className={styles.container} >
           <Typography className={classes.overview} variant='h1' color='common.black' mb='4px'>
@@ -222,7 +216,7 @@ const Dashboard = ({ signature }) => {
           <FlexRow style={{ gap: '20px' }} className={styles.subContainer}>
             <FlexColumn style={{ gap: '20px' }} className={styles.leftSubContainer}>
               <Chart />
-              <Table theme={theme} open={viewModal} handleClose={closeViewModal} handleOpen={openViewModal} />
+              <StyledTable theme={theme} modalOpen={modalOpen} setModalOpen={setModalOpen} />
             </FlexColumn>
             <FlexColumn style={{ gap: '20px' }} className={styles.rightSubContainer}>
               <Card className={`${styles.about}`}>

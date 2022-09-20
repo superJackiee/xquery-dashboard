@@ -1,5 +1,7 @@
 import React from 'react'
 import { ThemeProvider } from "@mui/material/styles"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 import { light, dark } from "./theme"
 import { useSelector } from 'react-redux'
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom"
@@ -24,6 +26,7 @@ const App = () => {
           <Route path='/login' element={<Navigate replace to="/" />} /> */}
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </ThemeProvider>
   )
 }

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import api from '../../apis'
+import { toast } from 'react-toastify'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // mui
@@ -158,9 +159,9 @@ const ProjectModal = (props) => {
 
   const dots = [0, 1, 2]
 
-  const [newProj, setNewProj] = useState(null)
   const [active, setActive] = useState(0)
   const [tabIndex, setTabIndex] = useState(0)
+  const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
   const [keyVisibility, setKeyVisibility] = useState(false)
 
@@ -170,7 +171,6 @@ const ProjectModal = (props) => {
   // const [loading, setLoading] = useState(false)
 
   const onClickDetail = async () => {
-    console.log("signature:", signature)
     if (signature) {
       const body = {
         "id": 1,
@@ -183,7 +183,8 @@ const ProjectModal = (props) => {
         setNewProj(result?.data?.result)
         setTabIndex(1)
       } catch (error) {
-        console.log("error:", error)
+        console.log(typeof error?.message)
+        toast(`Backend server error occured: ${error?.message}`)
       }
     }
   }
@@ -284,7 +285,6 @@ const ProjectModal = (props) => {
                           )
                         })
                       }
-
                       <Select
                         id="demo-simple-select-autowidth"
                         value={0}
@@ -375,60 +375,13 @@ const ProjectModal = (props) => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-
-                  {/* <TableContainer component={Paper} className={styles.tableMobileBody} >
-                    <Table sx={{ minWidth: 400 }} aria-label="customized table" >
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell sx={{ width: '100px' }} >Host Server IP</StyledTableCell>
-                          <StyledTableCell sx={{ width: '120px' }} align="left">Supported Networks</StyledTableCell>
-                          <StyledTableCell sx={{ width: '100px' }} align="left">Server info</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row, index) => (
-                          <StyledTableRow key={index}>
-                            <StyledTableCell component="th" scope="row">
-                              <Stack direction={'column'}>
-                                <div>{row.ip[0]}</div>
-                                <div>{row.ip[1]}</div>
-                              </Stack>
-                            </StyledTableCell>
-                            <StyledTableCell align="left">
-                              <Stack direction="row" spacing={0.5} justifyContent='flex-start'
-                                sx={{ flexWrap: 'wrap' }}
-                              >
-                                {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                }
-                              </Stack>
-                            </StyledTableCell>
-
-                            <StyledTableCell align="left">
-                              <Button variant='contained' fullWidth
-                                onClick={onClickDetail}
-                              >
-                                <img src={info} alt='info' />
-                              </Button>
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer> */}
-
                 </div>
-
               </div>
             )
           }
-
           {
             tabIndex === 1 && ( // Step 2
               <div className={styles.tab1}>
-                {/* <div className={styles.info}> */}
                 <Stack sx={{ p: 3, mt: 1.5, border: 'none', borderRadius: 1, background: theme.palette.warning.dark, color: theme.palette.text.primary }} spacing={3}>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction='row' justifyContent={'flex-start'} spacing={0.5}>
@@ -479,8 +432,6 @@ const ProjectModal = (props) => {
                   </Stack>
                 </Stack>
 
-                {/* </div> */}
-
                 <Typography className={styles.subTitle} sx={{ mt: 3 }} color='common.black'>
                   Choose from one of the following service levels:
                 </Typography>
@@ -519,8 +470,8 @@ const ProjectModal = (props) => {
                         }} />
                       </Stack>
                     </div>
-
                   </div>
+
                   <div className={styles.tier}>
                     <div style={{ padding: '8px 16px', background: '#f9f5ff', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>
                       <Stack direction='row' justifyContent={'space-between'} alignItems='center'
@@ -553,7 +504,6 @@ const ProjectModal = (props) => {
               </div>
             )
           }
-
           {
             tabIndex === 2 && ( // Step 3
               <div className={styles.tab2}>

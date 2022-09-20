@@ -24,12 +24,31 @@ const titles = [
   'Title - Extend Project - Payment'
 ]
 
-const address = '0x6e6781b0666b5d3B9462697372CF49156A1'
-
 const ProjectInfoModal = (props) => {
-  const { open, handleClose } = props
+  const { projectInfo, modalOpen, setModalOpen } = props
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
+
+  const analyseInfo = () => {
+    if (!projectInfo) return null
+    const date = new Date(projectInfo?.expiry_time)
+    const networks = Object.keys(projectInfo)
+      .filter((key) => key.includes("_address") && !!projectInfo[key])
+    // .map((key) => key.split("_")[0])
+    const currencies = Object.keys(projectInfo)
+      .filter((key) => key.includes("amount_") && Number(projectInfo[key]) > 0)
+    // .map((key) => key.split("_")[key.split("_").length - 1])
+
+    return {
+      id: projectInfo?.project_id,
+      status: projectInfo?.status,
+      usage: 'unknown',
+      expires: date?.getHours() + ':' + date?.getMinutes() + ', ' + date?.toDateString()?.slice(4),
+      networks: networks,
+      currencies: currencies,
+      tier: projectInfo?.tier
+    }
+  }
 
   const [tabIndex, setTabIndex] = useState(0)
   const [title, setTitle] = useState(titles[0])
@@ -42,7 +61,7 @@ const ProjectInfoModal = (props) => {
   return (
     <div>
       <Modal
-        open={open}
+        open={modalOpen}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         sx={{ overflowX: 'hidden', overflowY: 'scroll' }}
@@ -50,7 +69,7 @@ const ProjectInfoModal = (props) => {
       >
         <Box sx={{ backgroundColor: theme.palette.warning.light, border: 'none !important' }} className={`${styles.modalBox}`}>
           <Stack direction='row' justifyContent='flex-end'>
-            <Close sx={{ fontSize: '25px', cursor: 'pointer', color: '#98a2b3', margin: '-14px -14px 0px 0px' }} onClick={handleClose} />
+            <Close sx={{ fontSize: '25px', cursor: 'pointer', color: '#98a2b3', margin: '-14px -14px 0px 0px' }} onClick={() => setModalOpen(false)} false />
           </Stack>
           <Typography id="modal-modal-title" variant="h2" component="h2"
             className={styles.title}
@@ -76,13 +95,13 @@ const ProjectInfoModal = (props) => {
                       <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div>
                       <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
+                    <div>{analyseInfo()?.id}</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                       <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <Chip label="Active" size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
+                    <Chip label={analyseInfo()?.status} size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
                   </Stack>
                   {/* {
                     (projectInfoIndex === 1 || projectInfoIndex === 2) && ( */}
@@ -97,25 +116,36 @@ const ProjectInfoModal = (props) => {
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                         <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
-                      <div>10:38, Aug 01, 2022</div>
+                      <div>{analyseInfo()?.expires}</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                         <div style={{ color: '#344054', fontWeight: 500 }}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
                       <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
-                        <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
-                        <Chip label={'AVAX'} size='small' sx={{ color: '#c01048', backgroundColor: '#fff1f3' }} />
-                        <Chip label={'BSC'} size='small' sx={{
-                          color: '#854a0e', backgroundColor: '#fef7c3'
-                        }} />
+                        {analyseInfo()?.networks.map((network) => {
+                          const colors = { 'eth': '#175cd3', 'avax': '#c01048', 'bsc': '#854a0e', 'nevm': '#854a0e' }
+                          const bgColors = { 'eth': '#eff8ff', 'avax': '#fff1f3', 'bsc': '#fef7c3', 'nevm': '#fef7c3' }
+                          return (
+                            <Chip
+                              size='small'
+                              key={network.split('_')[0]}
+                              label={network.split('_')[0].toUpperCase()}
+                              sx={{
+                                color: colors[network.split('_')[0]],
+                                backgroundColor: bgColors[network.split('_')[0]]
+                              }} />
+                          )
+                        })}
                       </Stack>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                         <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
-                      <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
+                      <div>
+                        {analyseInfo()?.currencies
+                          .map((key) => key.split("_")[key.split("_").length - 1])?.join(', ')}</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
@@ -127,7 +157,7 @@ const ProjectInfoModal = (props) => {
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                         <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                       </Stack>
-                      <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
+                      <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                     </Stack>
                   </>
                   {/* )
@@ -165,23 +195,36 @@ const ProjectInfoModal = (props) => {
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                             <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
-                          <div>10:38, Aug 01, 2022</div>
+                          <div>{analyseInfo(projectInfo?.expiry_time)?.expires}</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                             <div>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
                           <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
-                            <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
-                            <Chip label={'AVAX'} size='small' sx={{ color: '#c01048', backgroundColor: '#fff1f3' }} />
-                            <Chip label={'BSC'} size='small' sx={{ color: '#854a0e', backgroundColor: '#fef7c3' }} />
+                            {analyseInfo()?.networks.map((network) => {
+                              const colors = { 'eth': '#175cd3', 'avax': '#c01048', 'bsc': '#854a0e', 'nevm': '#854a0e' }
+                              const bgColors = { 'eth': '#eff8ff', 'avax': '#fff1f3', 'bsc': '#fef7c3', 'nevm': '#fef7c3' }
+                              return (
+                                <Chip
+                                  size='small'
+                                  key={network.split('_')[0]}
+                                  label={network.split('_')[0].toUpperCase()}
+                                  sx={{
+                                    color: colors[network.split('_')[0]],
+                                    backgroundColor: bgColors[network.split('_')[0]]
+                                  }} />
+                              )
+                            })}
                           </Stack>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                             <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
-                          <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
+                          <div>
+                            {analyseInfo()?.currencies
+                              .map((key) => key.split("_")[key.split("_").length - 1])?.join(', ')}</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
@@ -193,7 +236,7 @@ const ProjectInfoModal = (props) => {
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                             <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                           </Stack>
-                          <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
+                          <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                         </Stack>
                       </>
                     )
@@ -209,18 +252,27 @@ const ProjectInfoModal = (props) => {
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
                       <div className={styles.left}>Project ID: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
+                    <div>{analyseInfo()?.id}</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
                       <div className={styles.left}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
                     <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
-                      <Chip label={'ETH'} size='small' sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }} />
-                      <Chip label={'AVAX'} size='small' sx={{ color: '#c01048', backgroundColor: '#fff1f3' }} />
-                      <Chip label={'BSC'} size='small' sx={{
-                        color: '#854a0e', backgroundColor: '#fef7c3'
-                      }} />
+                      {analyseInfo()?.networks.map((network) => {
+                        const colors = { 'eth': '#175cd3', 'avax': '#c01048', 'bsc': '#854a0e', 'nevm': '#854a0e' }
+                        const bgColors = { 'eth': '#eff8ff', 'avax': '#fff1f3', 'bsc': '#fef7c3', 'nevm': '#fef7c3' }
+                        return (
+                          <Chip
+                            size='small'
+                            key={network.split('_')[0]}
+                            label={network.split('_')[0].toUpperCase()}
+                            sx={{
+                              color: colors[network.split('_')[0]],
+                              backgroundColor: bgColors[network.split('_')[0]]
+                            }} />
+                        )
+                      })}
                     </Stack>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
@@ -233,7 +285,7 @@ const ProjectInfoModal = (props) => {
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
                       <div className={styles.left}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                     </Stack>
-                    <div style={{ fontSize: '14px' }}>Tier 2 - 32 million requests / month</div>
+                    <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                   </Stack>
                 </Stack>
 
@@ -254,11 +306,17 @@ const ProjectInfoModal = (props) => {
                       <HelpOutline sx={{ fontSize: '16px' }} />
                     </Stack>
                     <Stack direction='column' justifyContent={'flex-start'} className={styles.payRight} alignItems={'flex-start'}>
-                      <div><span className={styles.right}>aaBLOCK:</span>includes a 10% discount</div>
-                      <div><span className={styles.right}>aaBLOCK:</span>includes a 10% discount</div>
-                      <div><span className={styles.right}>ETH:</span>0.013138</div>
-                      <div><span className={styles.right}>BNB:</span>0.1456</div>
-                      <div><span className={styles.right}>AVAX:</span>0.314</div>
+                      {
+                        analyseInfo()?.currencies.map((currency) => {
+                          return (
+                            <div key={currency}>
+                              <span className={styles.right}>
+                                {currency.split("_")[currency.split("_").length - 1].toUpperCase()}:&nbsp;
+                              </span>{projectInfo[currency]}
+                            </div>
+                          )
+                        })
+                      }
                     </Stack>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} alignItems='center' className={styles.payAddress}>
@@ -271,7 +329,7 @@ const ProjectInfoModal = (props) => {
                       sx={{
                         fontSize: '14px',
                         fontWeight: 600,
-                        width: '40%',
+                        width: '35%',
                         color: '#344054'
                       }}
                     >
@@ -279,9 +337,9 @@ const ProjectInfoModal = (props) => {
                     </Stack>
                     <Stack direction='row' justifyContent={'flex-start'} alignItems='center' className={`${styles.right}`} spacing={1}>
                       {/* <ContentCopy sx={{ cursor: 'pointer' }} /> */}
-                      <CopyToClipboard text={(address)} onCopy={() => setCopyFlag(true)}>
+                      <CopyToClipboard text={(projectInfo[analyseInfo()?.networks[0]])} onCopy={() => setCopyFlag(true)}>
                         <div className={styles.address}>
-                          {address}
+                          {projectInfo[analyseInfo()?.networks[0]]}
                           {copyFlag ? <CheckCircleOutline sx={{ cursor: 'pointer' }} /> : <ContentCopy sx={{ cursor: 'pointer' }} />}
                         </div>
                       </CopyToClipboard>
@@ -358,7 +416,7 @@ const ProjectInfoModal = (props) => {
                   onClick={() => {
                     // setTabIndex(tabIndex - 1)
                     setTabIndex(0)
-                    handleClose()
+                    setModalOpen(false)
                   }}
                   sx={{ height: '44px', borderRadius: '6px', border: 'solid 1px #d0d5dd', backgroundColor: '#fff', color: '#344054' }}
                 >
@@ -370,7 +428,7 @@ const ProjectInfoModal = (props) => {
                   fullWidth
                   onClick={() => {
                     setTabIndex(0)
-                    handleClose()
+                    setModalOpen(false)
                   }}
                   sx={{ height: '44px', borderRadius: '6px' }}
                 >
@@ -398,7 +456,7 @@ const ProjectInfoModal = (props) => {
                 <Button variant='contained' endIcon={<ArrowForward />}
                   onClick={() => {
                     setTabIndex(0)
-                    handleClose()
+                    setModalOpen(false)
                   }}
                   sx={{ height: '44px' }}
                 >
