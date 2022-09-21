@@ -33,7 +33,12 @@ export const light = createTheme({
       fontSize: 16,
       fontWeight: 500,
       textTransform: "none"
-    }
+    },
+    p: {
+      fontSize: 14,
+      fontWeight: 300,
+      textTransform: "none"
+    },
   },
   palette: {
     primary: {
