@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { toast } from "react-toastify"
 import usePagination from "@mui/material/usePagination"
 import { useSelector } from "react-redux"
 import { useMedia } from 'react-use'
@@ -26,6 +27,7 @@ import { FilterList, Close } from "@mui/icons-material"
 import OutlinedInput from '@mui/material/OutlinedInput'
 // custom components
 import ProjectInfoModal from "../ViewInfoModal"
+import api from "../../apis"
 
 const List = styled('ul')({
   listStyle: 'none',
@@ -189,27 +191,27 @@ const useStyles = makeStyles((theme) =>
 
 const StyledTable = (props) => {
   const response = [
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236d', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236e', status: 'Pending', usage: 0, expires: '-' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236f', status: 'Active', usage: 8, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236g', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236h', status: 'Active', usage: 50, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236i', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236j', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236k', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236l', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236m', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236o', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236p', status: 'Pending', usage: 0, expires: '-' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236q', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236r', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236s', status: 'Active', usage: 50, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236t', status: 'Pending', usage: 0, expires: '-' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236u', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    { projectId: 'c9f0f895fb98ab9159f51fd0297e236v', status: 'Active', usage: 25, expires: 'Aug 01, 2022' }
+    { projectId: 'e45bc49b-112e-4e83-993a-531d5a4ff0c4', status: 'Active', usage: 25, expires: 'Sep 20, 2022', apiKey: 'p4xSwBmLLklleSrvuA2YwWguQ_LrvRYOk-0sdQ3lgIo' },
+    { projectId: 'bf73b40d-034e-4252-a1c1-388198ff9843', status: 'Pending', usage: 0, expires: 'Sep 20, 2022', apiKey: 'HSwcdAp-TiADNE_3WXMkvJw_U0KH-aRC7vW2R0yrbgc' },
+    { projectId: '2260d86f-52cd-4750-8651-89c581106451', status: 'Active', usage: 8, expires: 'Sep 20, 2022', apiKey: 'atkfwceMjZuj9oYjNF7j9DfG34UIZgkWS7FoVzqtDZo' },
+    { projectId: '6099c209-22da-4ba9-8350-9eb873c78250', status: 'Inactive', usage: 47, expires: 'Sep 20, 2022', apiKey: 'wIUdL12mQcc6OjyD58IVJ3DkvxaE_UNfJza0VtNAoZc' },
+    { projectId: 'e6e49ef4-81bc-4758-a85c-1edf880adfc1', status: 'Active', usage: 50, expires: 'Sep 20, 2022', apiKey: 'JGmAd1CYDDRZdTGa1xMwtw3z0RcFw8x1Z_0ih7Qv1l4' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236i', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236j', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236k', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236l', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236m', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236o', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236p', status: 'Pending', usage: 0, expires: '-' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236q', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236r', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236s', status: 'Active', usage: 50, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236t', status: 'Pending', usage: 0, expires: '-' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236u', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
+    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236v', status: 'Active', usage: 25, expires: 'Aug 01, 2022' }
   ]
 
-  const { theme, open, handleClose, handleOpen } = props
+  const { theme, modalOpen, setModalOpen } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
   const [fromFilter, setFromFilter] = useState(filterlist)
@@ -219,6 +221,7 @@ const StyledTable = (props) => {
     count: Math.ceil(filteredList.length / 10)
   })
   const [page, setPage] = useState(1)
+  const [projectInfo, setProjectInfo] = useState(null)
 
 
   const handleChange = (event) => {
@@ -240,7 +243,17 @@ const StyledTable = (props) => {
     setFromFilter(fromTemp)
     toTemp = toFilter.filter((item) => item !== newValue)
     setToFilter(toTemp)
-  };
+  }
+
+  const handleGetInfo = async (projectId, apiKey) => {
+    try {
+      const response = await api.project.getProjectStats({ projectId, apiKey })
+      setProjectInfo(response.data.result)
+      setModalOpen(true)
+    } catch (error) {
+      toast(`Backend server error occured: ${error?.message}`)
+    }
+  }
 
   const filterTags = () => {
     return (
@@ -263,7 +276,7 @@ const StyledTable = (props) => {
       <div className={`${styles.header} ${classes.bottomDiv}`}>
         <FlexColumn>
           <Typography variant='h3' color='common.black' className={`${styles.title}`}>Your Projects</Typography>
-          <Typography variant='p' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
+          <Typography variant='h5' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
         </FlexColumn>
       </div>
       <div className={`${styles.filter} ${classes.bottomDiv}`}>
@@ -350,7 +363,7 @@ const StyledTable = (props) => {
                 </TableCell>
                 <TableCell className={`${classes.cell} ${classes.sticky}`} padding="none" align="right">
                   <FlexColumn className={`${styles.column}`} style={{ padding: '12px 0px 12px 35px' }}>
-                    <div className={styles.infoBtn} onClick={handleOpen}>
+                    <div className={styles.infoBtn} onClick={() => handleGetInfo(data.projectId, data.apiKey)}>
                       <Typography variant='h5' color='white' className={styles.info} style={{ whiteSpace: 'nowrap' }}>
                         View project info
                       </Typography>
@@ -365,7 +378,7 @@ const StyledTable = (props) => {
       </TableContainer>
       <StyledPagination items={items} curPage={page} length={filteredList.length} setPage={setPage} />
 
-      <ProjectInfoModal open={open} handleClose={handleClose} />
+      <ProjectInfoModal projectInfo={projectInfo} modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </Card>
   )
 }
