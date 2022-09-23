@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const projectEndpoint = `http://194.163.143.68/xrs/projects`
-const localEndpoint = `https://xquery-backend.herokuapp.com/api/sign`
+//const localEndpoint = `https://xquery-backend.herokuapp.com/api/sign`
+const localEndpoint = `http://143.198.144.71:5432/api/sign`
 
 const projectApi = {
   createProject: (param) => axios.post(projectEndpoint, param),
